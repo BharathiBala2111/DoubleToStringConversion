@@ -1,0 +1,37 @@
+extension Double {
+    func round(to places: Int = 2) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+    /*
+     To convert the double value to string with 2 digits precised after a decimal.
+     If need to modify the rounding mode, update it in the number formatter property settings.
+     Right now its set as numberFormatter.roundingMode =.down mode. Ex: 1.5678 => 1.56
+     To Round the values as 1.5678 => 1.57 , set  numberFormatter.roundingMode = .up
+    */
+    func convertTo2Digits() -> String {
+        return self.delimiter
+    }
+    
+    private static var numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.minimumFractionDigits = 2
+        numberFormatter.maximumFractionDigits = 2
+        numberFormatter.roundingMode = .down
+        return numberFormatter
+    }()
+    
+  
+    var delimiter: String {
+        return Double.numberFormatter.string(from: NSNumber(value: self)) ?? ""
+    }
+    /*
+    To Convert the double value with 2 digits precised after decimal.
+    Update the minimumFractionDigits in numberFormatter variable to get different counts after decimal.
+    */
+    var doubleValue: Double {
+        return Double.numberFormatter.number(from: self.delimiter)?.doubleValue ?? 0
+    }
+}
